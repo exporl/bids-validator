@@ -1148,4 +1148,52 @@ export default {
     reason:
       'Participant_id column labels must consist of the pattern "sub-<subject_id>".',
   },
+  1130: {
+    key: 'APR_AND_BDF_NOT_MATCH',
+    severity: 'warning',
+    reason:
+      'ExpORL Caveat: The number of apr and bdf/bdf.gz files does not correspond.',
+  },
+  1131: {
+    key: 'STIMULATION_COLUMN_APX',
+    severity: 'error',
+    reason:
+      'ExpORL Caveat: First column of the stimulation file must be named "apx_file"',
+  },
+  1132: {
+    key: 'STIMULATION_COLUMN_APR',
+    severity: 'error',
+    reason:
+      'ExpORL Caveat: Second column of the stimulation file must be named "apr_file"',
+  },
+  1133: {
+    key: 'APX_FILE_MISSING',
+    severity: 'error',
+    reason:
+      'ExpORL Caveat: An apx file was declared but not found in the dataset.',
+  },
+  1134: {
+    key: 'UNUSED_APX',
+    severity: 'warning',
+    reason:
+      'ExpORL Caveat: There are apx files in the /stimuli directory that are not utilized in any _stimulation.tsv file.',
+  },
+  1135: {
+    key: 'APR_FILE_MISSING_OR_WRONG_IN_STIMULATION_TSV',
+    severity: 'error',
+    reason:
+      'ExpORL Caveat: An apr file was declared in a stimulation.tsv but not found in the same folder.',
+  },
+  1136: {
+    key: 'STIMULATION_FILE_TOO_SHORT',
+    severity: 'error',
+    reason:
+      'ExpORL Caveat: Empty stimulation file! It contains less than two rows, which is not sufficient to include both headers and data rows.',
+  },
+  1137: {
+    key: 'APR_AND_STIMULATION_NOT_MATCH',
+    severity: 'warning',
+    reason:
+      'ExpORL Caveat: The number of apr and stimulation files does not correspond.',
+  },
 }

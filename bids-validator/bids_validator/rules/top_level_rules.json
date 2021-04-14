@@ -95,7 +95,8 @@
         "_electrodes\\.tsv",
         "_electrodes\\.json",
         "_photo\\.jpg",
-        "_coordsystem\\.json"
+        "_coordsystem\\.json",
+        "_stimulation\\.json"
       ]
     }
   },

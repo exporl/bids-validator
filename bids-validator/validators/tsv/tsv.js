@@ -33,6 +33,7 @@ const filenameEvidence = filename => `Filename: ${filename}`
 const TSV = (file, contents, fileList, callback) => {
   const issues = []
   const stimPaths = []
+  const stimApxPaths = []            // ADDED (Debora)
   if (contents.includes('\r') && !contents.includes('\n')) {
     issues.push(
       new Issue({
@@ -185,6 +186,114 @@ const TSV = (file, contents, fileList, callback) => {
       }
     }
   }
+
+
+    // ADDED (Debora, 2020-09-19) ////////////////////////////////////////////////////////////////////////
+  // stimulation.tsv
+  if (file.name.endsWith('_stimulation.tsv')) {
+    if (headers.length == 0 || headers[0] !== 'apx_file') {
+      issues.push(
+        new Issue({
+          file: file,
+          evidence: headersEvidence(headers),
+          line: 1,
+          code: 1131,
+        }),
+      )
+    }
+    if (headers.length < 2 || headers[1].trim() !== 'apr_file') {
+      issues.push(
+        new Issue({
+          file: file,
+          evidence: headersEvidence(headers),
+          line: 1,
+          code: 1132,
+        }),
+      )
+    }
+
+    // create full dataset path list
+    const pathList = []
+    for (let f in fileList) {
+      pathList.push(fileList[f].relativePath)
+    }
+
+    // check for apx file
+    const stimApxFiles = []
+    if (headers.indexOf('apx_file') > -1) {
+      for (let k = 0; k < rows.length; k++) {
+        const stimApxFile = rows[k][headers.indexOf('apx_file')]
+        const stimApxPath = '/stimuli/' + stimApxFile
+        if (
+          stimApxFile &&
+          stimApxFile !== 'n/a' &&
+          stimApxFile !== 'apx_file' &&
+          stimApxFiles.indexOf(stimApxFile) == -1
+        ) {
+          stimApxFiles.push(stimApxFile)
+          stimPaths.push(stimApxPath)
+          if (pathList.indexOf(stimApxPath) == -1) {
+            issues.push(
+              new Issue({
+                file: file,
+                evidence: stimApxFile,
+                reason:
+                  'ExpORL Caveat: An apx file (' +
+                  stimApxFile +
+                  ') was declared but not found in /stimuli.',
+                line: k + 1,
+                character: rows[k].indexOf(stimApxFile),
+                code: 1133,
+              }),
+            )
+          }
+        }
+      }
+    }
+
+    // check for apr file
+    var stimulationPath = file.relativePath
+    //console.log(stimulationPath.substr(0,stimulationPath.indexOf('eeg')))
+    const stimAprFiles = []
+    if (headers.indexOf('apr_file') > -1) {
+      for (let k = 0; k < rows.length; k++) {
+        const stimAprFile = rows[k][headers.indexOf('apr_file')]
+        const stimAprPath = stimulationPath.substr(0,stimulationPath.indexOf('eeg')) +'eeg/' + stimAprFile
+        //console.log(stimAprPath)
+        if (
+          stimAprFile &&
+          stimAprFile !== 'n/a' &&
+          stimAprFile !== 'apr_file' &&
+          stimAprFiles.indexOf(stimAprFile) == -1
+        ) {
+          stimAprFiles.push(stimAprFile)
+          stimPaths.push(stimAprPath)
+          if (pathList.indexOf(stimAprPath) == -1) {
+            issues.push(
+              new Issue({
+                file: file,
+                evidence: stimAprFile,
+                reason:
+                  'ExpORL Caveat: An apr file (' +
+                  stimAprFile +
+                  ') was declared in a stimulation file ('+
+                  file.name +
+                  '), but it was not found in the same folder.',
+                line: k + 1,
+                character: rows[k].indexOf(stimAprFile),
+                code: 1135,
+              }),
+            )
+          }
+        }
+      }
+    }
+
+  }
+  /////////////////////////////////////////////////////////////////////////
+
+
+
 
   // participants.tsv
   let participants = null
