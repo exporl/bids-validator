@@ -365,7 +365,17 @@
         "UNCInfant1V23",
         "UNCInfant2V23"
       ],
-      "@@@_eeg_type_@@@": ["vhdr", "vmrk", "eeg", "edf", "bdf", "set", "fdt"],
+      "@@@_eeg_type_@@@": [
+        "vhdr",
+        "vmrk",
+        "eeg",
+        "edf",
+        "bdf",
+        "set",
+        "fdt",
+        "apr",
+        "bdf\\.gz"
+      ],
       "@@@_eeg_ext_@@@": [
         "_events\\.json",
         "_events\\.tsv",
@@ -375,7 +385,8 @@
         "_channels\\.tsv",
         "_eeg\\.json",
         "_coordsystem\\.json",
-        "_photo\\.jpg"
+        "_photo\\.jpg",
+        "_stimulation\\.tsv"
       ],
       "@@@_cont_ext_@@@": [
         "_physio\\.tsv\\.gz",

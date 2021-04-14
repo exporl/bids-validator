@@ -28,12 +28,25 @@ const checkStimuli = function(stimuli) {
     })
     for (let key of unusedStimuli) {
       const stimulus = unusedStimuli[key]
-      issues.push(
-        new Issue({
-          code: 77,
-          file: stimulus,
-        }),
-      )
+      if (!key.relativePath.endsWith('apx')) {
+        // ADDED (Debora, 2020-09-17)
+        issues.push(
+          new Issue({
+            code: 77,
+            file: stimulus,
+          }),
+        )
+      } else {
+        // ADDED (Debora, 2020-09-20)
+        issues.push(
+          // ADDED
+          new Issue({
+            // ADDED
+            code: 1134, // ADDED
+            file: stimulus, // ADDED
+          }), // ADDED
+        ) // ADDED
+      } // ADDED
     }
   }
   return issues

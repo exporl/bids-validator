@@ -17,6 +17,8 @@ import checkDatasetDescription from './checkDatasetDescription'
 import checkReadme from './checkReadme'
 import validateMisc from '../../utils/files/validateMisc'
 import collectSubjectMetadata from '../../utils/summary/collectSubjectMetadata'
+import checkBdfApr from './checkBdfApr'
+import checkStimulationApr from './checkStimulationApr'
 
 /**
  * Full Test
@@ -192,7 +194,9 @@ const fullTest = (fileList, options, annexed, dir, callback) => {
         tsv.validateTsvColumns(tsvs, jsonContentsDict, headers),
       )
       // Validate continous recording files
-      self.issues = self.issues.concat(tsv.validateContRec(files.contRecord, jsonContentsDict))
+      self.issues = self.issues.concat(
+        tsv.validateContRec(files.contRecord, jsonContentsDict),
+      )
 
       if (!options.ignoreSubjectConsistency) {
         // Validate session files
@@ -203,6 +207,14 @@ const fullTest = (fileList, options, annexed, dir, callback) => {
       self.issues = self.issues.concat(
         checkAnyDataPresent(fileList, summary.subjects),
       )
+
+      // Check for equal number of apr and bdf/bdf.gz files in dataset          // ADDED (Debora, 2020-09-18)
+      const aprIssues = checkBdfApr(fileList)
+      self.issues = self.issues.concat(aprIssues)
+
+      // Check for equal number of apr and bdf/bdf.gz files in dataset          // ADDED (Debora, 2020-11-23)
+      const stimIssues = checkStimulationApr(fileList)
+      self.issues = self.issues.concat(stimIssues)
 
       // Group summary modalities
       summary.modalities = utils.modalities.group(summary.modalities)
