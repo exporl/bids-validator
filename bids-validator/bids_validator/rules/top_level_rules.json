@@ -15,7 +15,8 @@
         "phase2.json",
         "fieldmap.json",
         "events.json",
-        "scans.json"
+        "scans.json",
+        "stimulation.json"
       ]
     }
   },

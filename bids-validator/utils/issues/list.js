@@ -1152,25 +1152,22 @@ export default {
     key: 'APR_AND_BDF_NOT_MATCH',
     severity: 'warning',
     reason:
-      'ExpORL Caveat: The number of apr and bdf/bdf.gz files does not correspond.',
+    'ExpORL Caveat: The number of apr groups and bdf/bdf.gz files does not correspond. An apr group comprises all apr files that have the same prefix and end with "eeg*.apr".)',
   },
   1131: {
     key: 'STIMULATION_COLUMN_APX',
     severity: 'error',
-    reason:
-      'ExpORL Caveat: First column of the stimulation file must be named "apx_file"',
+    reason: "ExpORL Caveat: First column of the stimulation file must be named 'apx_file'",
   },
   1132: {
     key: 'STIMULATION_COLUMN_APR',
     severity: 'error',
-    reason:
-      'ExpORL Caveat: Second column of the stimulation file must be named "apr_file"',
+    reason: "ExpORL Caveat: Second column of the stimulation file must be named 'apr_file'",
   },
   1133: {
     key: 'APX_FILE_MISSING',
     severity: 'error',
-    reason:
-      'ExpORL Caveat: An apx file was declared but not found in the dataset.',
+    reason: 'ExpORL Caveat: An apx file was declared but not found in the dataset.',  
   },
   1134: {
     key: 'UNUSED_APX',
@@ -1194,6 +1191,6 @@ export default {
     key: 'APR_AND_STIMULATION_NOT_MATCH',
     severity: 'warning',
     reason:
-      'ExpORL Caveat: The number of apr and stimulation files does not correspond.',
+      'ExpORL Caveat: The number of apr groups and stimulation files does not correspond. An apr group comprises all apr files that have the same prefix and end with "eeg*.apr".)',
   },
 }
