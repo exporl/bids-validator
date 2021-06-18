@@ -148,6 +148,9 @@
       "@@@_behavioral_ext_@@@": [
         "_beh\\.json",
         "_beh\\.tsv",
+        "_beh\\.apr",
+        "_beh\\.pdf",
+        "_beh\\.png",
         "_events\\.json",
         "_events\\.tsv"
       ],
@@ -529,7 +532,7 @@
   },
 
   "stimuli": {
-    "regexp": "^[\\/\\\\](?:stimuli)[\\/\\\\](?:.*)$"
+    "regexp": "^[\\/\\\\](?:sub-[a-zA-Z0-9]+[\\/\\\\])?(?:(ses-[a-zA-Z0-9]+)[\\/\\\\])?stimuli[\\/\\\\](?:.*)$"
   },
 
   "pet": {
@@ -550,5 +553,9 @@
     "tokens": {
       "@@@_pet_ext_@@@": ["blood\\.tsv\\.gz", "blood\\.tsv", "blood\\.json"]
     }
+  }, 
+
+  "remarks": {
+    "regexp": "^[\\/\\\\](sub-[a-zA-Z0-9]+)[\\/\\\\](?:(ses-[a-zA-Z0-9]+)[\\/\\\\])remarks[\\/\\\\]\\1(_\\2)_*"
   }
 }

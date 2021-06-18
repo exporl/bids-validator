@@ -16,7 +16,10 @@
         "fieldmap.json",
         "events.json",
         "scans.json",
-        "stimulation.json"
+        "stimulation.json", 
+        "channels.json",
+        "channels.tsv", 
+        "coordsystem.json"
       ]
     }
   },

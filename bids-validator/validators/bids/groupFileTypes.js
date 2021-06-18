@@ -5,6 +5,7 @@ const groupFileTypes = (fileList, options) => {
     json: [],
     nifti: [],
     stimuli: [],
+    trigger_stimuli: [], // ADDED MARLIES (2021-06-17)
     ephys: [],
     tsv: [],
     bval: [],
@@ -25,7 +26,8 @@ const sortFiles = (fileList, options, files) => {
     const filename = file.name
     if (utils.type.file.isStimuliData(file.relativePath)) {
       // collect stimuli
-      files.stimuli.push(file)
+      files.stimuli.push(file) 
+      files.trigger_stimuli.push(file) // ADDED MARLIES (2021-06-17)
       files.misc.push(file)
     } else if (!utils.type.isBIDS(file.relativePath)) {
       // invalid file type

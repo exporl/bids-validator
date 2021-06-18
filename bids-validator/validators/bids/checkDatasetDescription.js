@@ -46,15 +46,15 @@ const checkAuthorField = authors => {
     })
     // if authors is length 1, we want a warning for a single comma
     // and an error for multiple commas
-    if (authors.length == 1) {
-      const author = authors[0]
+    //if (authors.length == 1) { // AT EXPORL DATASETS CAN BE SINGLE AUTHOR
+    //  const author = authors[0]
       // check the number of commas in the single author field
-      if (author.split(',').length <= 2) {
+      //if (author.split(',').length <= 2) {
         // if there is one or less comma in the author field,
         // we suspect that the curator has not listed everyone involved
-        issues.push(new Issue({ code: 102, evidence: author }))
-      }
-    }
+        //issues.push(new Issue({ code: 102, evidence: author }))
+      //}
+    //}
   } else {
     // if there are no authors,
     // warn user that errors could occur during doi minting

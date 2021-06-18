@@ -41,6 +41,9 @@ const checkBdfApr = (fileList) => { // for every bdf there should be one accordi
 
     //console.log(aprFiles)
     aprFiles = aprFiles.filter(onlyUnique) // ADDED 2021-04-27
+
+    // discard all apr files which contain _beh → those files must not have a corresponding bdf file ADDED MARLIES (2021-06-17)
+    aprFiles = aprFiles.filter(item => !item.includes("_beh")) // ADDED MARLIES 2021-06-17
  
     //console.log(aprFiles)
 

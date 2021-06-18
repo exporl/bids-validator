@@ -1193,4 +1193,28 @@ export default {
     reason:
       'ExpORL Caveat: The number of apr groups and stimulation files does not correspond. An apr group comprises all apr files that have the same prefix and end with "eeg*.apr".)',
   },
+  1138: {
+    key: 'MISSING_TRIGGER_STIMULUS',
+    severity: 'error',
+    reason:
+      'ExpORL Caveat: Missing trigger stimulus. Trigger stimulus, specified in events file, is not found in stimulus directory.',
+  },
+  1139: {
+    key: 'UNUSED_TRIGGER_STIMULUS',
+    severity: 'warning',
+    reason:
+      'ExpORL Caveat: Unused trigger stimulus in stimulus directory.',
+  },
+  1140: {
+    key: 'WRONG_DATABASE_NAME',
+    severity: 'error',
+    reason:
+      'ExpORL Caveat: Database name is not according to Exporl bids format: <year>-<Name of study>',
+  },
+  1141: {
+    key: 'WRONG_DATABASE_NAME',
+    severity: 'error',
+    reason:
+      'ExpORL Caveat: Author name in name of database is not allowed',
+  },
 }

@@ -23,6 +23,7 @@ const checkStimulationApr = (fileList) => { // for every apr (or group of aprs) 
     }
     
     aprFiles = aprFiles.filter(onlyUnique) // ADDED 2021-04-27
+    aprFiles = aprFiles.filter(item => !item.includes("_beh")) // ADDED MARLIES 2021-06-17
 
     if (!utils.array.equals(stimulationFiles, aprFiles, true)) {
         

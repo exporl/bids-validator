@@ -33,6 +33,7 @@ const filenameEvidence = filename => `Filename: ${filename}`
 const TSV = (file, contents, fileList, callback) => {
   const issues = []
   const stimPaths = []
+  const triggerPaths = []
   const stimApxPaths = []            // ADDED (Debora)
   if (contents.includes('\r') && !contents.includes('\n')) {
     issues.push(
@@ -181,6 +182,45 @@ const TSV = (file, contents, fileList, callback) => {
                 code: 52,
               }),
             )
+          }
+        }
+      }
+    }
+    // check for trigger stimuli file ADDED BY MARLIES (2021-06-17)
+    const triggerFiles = []
+    if (headers.indexOf('trigger_file') > -1) {
+      for (let k = 0; k < rows.length; k++) {
+        const triggerFile = rows[k][headers.indexOf('trigger_file')]
+        const triggerPath_top = '/stimuli/' + triggerFile
+        const relativePath = file.relativePath.match(/(.*)[\/\\]/)[1]||''
+        const triggerPath_subject = relativePath.replace('eeg', 'stimuli/eeg/') + triggerFile
+        if (
+          triggerFile &&
+          triggerFile !== 'n/a' &&
+          triggerFile !== 'trigger_file' &&
+          triggerFiles.indexOf(triggerFile) == -1
+        ) {
+          triggerFiles.push(triggerFile)
+          if (pathList.indexOf(triggerPath_top) == -1 && pathList.indexOf(triggerPath_subject) == -1) {
+            triggerPaths.push(triggerPath_top)
+            triggerPaths.push(triggerPath_subject)
+            issues.push(
+              new Issue({
+                file: file,
+                evidence: triggerFile,
+                reason:
+                  'A trigger file (' +
+                  triggerFile + 
+                  ') was declared but not found in /stimuli or in subject specific stimuli folder.',
+                line: k + 1,
+                character: rows[k].indexOf(triggerFile),
+                code: 1138,
+              }),
+            )
+          }
+          else {
+            if (!(pathList.indexOf(triggerPath_top) == -1)) {triggerPaths.push(triggerPath_top)}
+            if (!(pathList.indexOf(triggerPath_subject) == -1)) {triggerPaths.push(triggerPath_subject)}
           }
         }
       }
@@ -516,7 +556,7 @@ const TSV = (file, contents, fileList, callback) => {
       checkAcqTimeFormat(rows, file, issues)
     }
   }
-  callback(issues, participants, stimPaths)
+  callback(issues, participants, stimPaths, triggerPaths)
 }
 
 export default TSV

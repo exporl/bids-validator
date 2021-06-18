@@ -4,17 +4,18 @@ import hed from './hed'
 import utils from '../../utils'
 const Issue = utils.issues.Issue
 
-export default function(events, stimuli, headers, jsonContents, dir) {
+export default function(events, stimuli, trigger_stimuli, headers, jsonContents, dir) {
   const issues = []
   // check that all stimuli files present in /stimuli are included in an _events.tsv file
   const stimuliIssues = checkStimuli(stimuli)
+  const triggerStimuliIssues = checkTriggerStimuli(trigger_stimuli) // ADDED MARLIES (2021-06-17)
 
   // check the events file for suspiciously long or short durations
   const designIssues = checkDesignLength(events, headers, jsonContents)
 
   // check the HED strings
   return hed(events, headers, jsonContents, dir).then(hedIssues => {
-    return issues.concat(stimuliIssues, designIssues, hedIssues)
+    return issues.concat(stimuliIssues, triggerStimuliIssues, designIssues, hedIssues)
   })
 }
 
@@ -28,25 +29,53 @@ const checkStimuli = function(stimuli) {
     })
     for (let key of unusedStimuli) {
       const stimulus = unusedStimuli[key]
-      if ( !(key.relativePath.endsWith("apx")) ) {  // ADDED (Debora, 2020-09-17)
+      if ( !(key.relativePath.endsWith("apx")) && !(key.name.startsWith("t_") || key.name.startsWith("trig_") || key.name.startsWith("trigger_")) ) {  // ADDED (Debora, 2020-09-17) (Marlies 2021-06-16)
         issues.push(
           new Issue({
             code: 77,
             file: stimulus,
           }),
         )
-      } else {                                  // ADDED (Debora, 2020-09-20)
-        issues.push(                            // ADDED 
-            new Issue({                         // ADDED 
-            code: 1134,                          // ADDED 
-            file: stimulus,                     // ADDED
-          }),                                   // ADDED
-        )                                       // ADDED
+      } else { 
+        if (key.relativePath.endsWith("apx")) {                                 // ADDED (Debora, 2020-09-20)
+            issues.push(                            // ADDED 
+                new Issue({                         // ADDED 
+                code: 1134,                          // ADDED 
+                file: stimulus,                     // ADDED
+              }), 
+            )
+          }                                       // ADDED
       }                                         // ADDED   
     }
   }
   return issues
 }
+
+// ADDED (Marlies 2021-06-16) >>>>>
+const checkTriggerStimuli = function(trigger_stimuli) {
+  const issues = []
+  const triggersFromEvents = trigger_stimuli.events
+  const triggersFromDirectory = trigger_stimuli.directory
+
+  if (triggersFromDirectory) {
+    const unusedStimuli = triggersFromDirectory.filter(function(trigger_stimuli) {
+      return triggersFromEvents.indexOf(trigger_stimuli.relativePath) < 0
+    })
+    for (let key of unusedStimuli) {
+      const stimulus = unusedStimuli[key]
+      if ( !(key.relativePath.endsWith("apx")) && (key.name.startsWith("t_") || key.name.startsWith("trig_") || key.name.startsWith("trigger_"))) { 
+        issues.push(
+          new Issue({
+            code: 1139,
+            file: stimulus,
+          }),
+        )
+      }
+    }
+  }
+  return issues
+}
+// <<<<<<<<<
 
 const checkDesignLength = function(events, headers, jsonContents) {
   const issues = []

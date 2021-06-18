@@ -52,6 +52,7 @@ const megCrosstalkData = buildRegExp(file_level_rules.meg_crosstalk)
 const stimuliData = buildRegExp(file_level_rules.stimuli)
 const petData = buildRegExp(file_level_rules.pet)
 const petBlood = buildRegExp(file_level_rules.pet_blood)
+const remarks = buildRegExp(file_level_rules.remarks) // ADDED MARLIES (2021-06-17)
 // Phenotypic data
 const phenotypicData = buildRegExp(phenotypic_rules.phenotypic_data)
 // Session level
@@ -103,7 +104,8 @@ export default {
       this.file.isFieldMap(path) ||
       this.file.isPhenotypic(path) ||
       this.file.isPET(path) ||
-      this.file.isPETBlood(path)
+      this.file.isPETBlood(path) ||
+      this.file.isRemark(path) // ADDED MARLIES (2021-06-17)
     )
   },
 
@@ -290,6 +292,11 @@ export default {
 
     isFuncBold: function(path) {
       return conditionalMatch(funcBoldData, path)
+    },
+
+    //  ADDED MARLIES (2021-06-14)
+    isRemark: function(path) {
+      return remarks.test(path)
     },
 
     hasModality: function(path) {

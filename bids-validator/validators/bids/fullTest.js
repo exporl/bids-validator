@@ -37,6 +37,10 @@ const fullTest = (fileList, options, annexed, dir, callback) => {
     events: [],
     directory: [],
   }
+  const trigger_stimuli = {
+    events: [],
+    directory: [],
+  }
   const jsonFiles = []
   const headers = []
   const participants = null
@@ -66,6 +70,16 @@ const fullTest = (fileList, options, annexed, dir, callback) => {
 
   // check for illegal character in task name and acq name
   self.issues = self.issues.concat(utils.files.illegalCharacterTest(fileList))
+
+  // check whether it is compliant according to exporl rules
+  const expressionDataset = /\d{4}-[a-zA-Z0-9]/
+  if (!(expressionDataset.test(dir))) {
+    self.issues.push(
+      new Issue({
+          reason: "Database name not compliant with Exporl standards",
+          code: 1140,                
+      }),
+  )}
 
   const files = groupFileTypes(fileList, self.options)
 
@@ -103,6 +117,7 @@ const fullTest = (fileList, options, annexed, dir, callback) => {
         participants,
         phenotypeParticipants,
         stimuli,
+        trigger_stimuli,
       )
     })
     .then(({ tsvIssues, participantsTsvContent }) => {
@@ -136,6 +151,25 @@ const fullTest = (fileList, options, annexed, dir, callback) => {
       // Check for datasetDescription file in the proper place
       const datasetDescriptionIssues = checkDatasetDescription(jsonContentsDict)
       self.issues = self.issues.concat(datasetDescriptionIssues)
+
+      // Check whether database name does not contain author names
+      const datasetDescription = jsonContentsDict['/dataset_description.json']
+      const authors = datasetDescription.Authors
+      const splitAuthors = authors.map(function(v){
+        return v.split(" ");
+      });
+      const splitAuthorsFlatten = [].concat.apply([], splitAuthors);
+      for (const name of splitAuthorsFlatten) {
+        if (dir.includes(name)) {
+          // push error → dataset should not contain name of authors
+          self.issues.push(
+            new Issue({
+                reason: "Database name not compliant with Exporl standards",
+                code: 1141,                
+            }),
+          )
+        }
+      }
 
       // Check for README file in the proper place
       const readmeIssues = checkReadme(fileList)
@@ -178,9 +212,11 @@ const fullTest = (fileList, options, annexed, dir, callback) => {
 
       // Events validation
       stimuli.directory = files.stimuli
+      trigger_stimuli.directory = files.trigger_stimuli // ADDED BY MARLIES (2021-06-17)
       return Events.validateEvents(
         events,
         stimuli,
+        trigger_stimuli, 
         headers,
         jsonContentsDict,
         dir,

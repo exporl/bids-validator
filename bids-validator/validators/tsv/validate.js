@@ -9,6 +9,7 @@ const validate = (
   participants,
   phenotypeParticipants,
   stimuli,
+  trigger_stimuli,
   annexed,
   dir,
 ) => {
@@ -34,6 +35,7 @@ const validate = (
           tsvIssues,
           participantList,
           stimFiles,
+          triggerFiles,
         ) {
           if (participantList) {
             if (file.name.endsWith('participants.tsv')) {
@@ -53,6 +55,10 @@ const validate = (
           if (stimFiles && stimFiles.length) {
             // add unique new events to the stimuli.events array
             stimuli.events = [...new Set([...stimuli.events, ...stimFiles])]
+          }
+          if (triggerFiles && triggerFiles.length) { // ADDED MARLIES (2021-06-17)
+            // add unique new events to the stimuli.events array
+            trigger_stimuli.events = [...new Set([...trigger_stimuli.events, ...triggerFiles])]
           }
           issues = issues.concat(tsvIssues)
         })
