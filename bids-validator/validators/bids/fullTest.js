@@ -155,19 +155,21 @@ const fullTest = (fileList, options, annexed, dir, callback) => {
       // Check whether database name does not contain author names
       const datasetDescription = jsonContentsDict['/dataset_description.json']
       const authors = datasetDescription.Authors
-      const splitAuthors = authors.map(function(v){
-        return v.split(" ");
-      });
-      const splitAuthorsFlatten = [].concat.apply([], splitAuthors);
-      for (const name of splitAuthorsFlatten) {
-        if (dir.includes(name)) {
-          // push error → dataset should not contain name of authors
-          self.issues.push(
-            new Issue({
-                reason: "Database name not compliant with Exporl standards",
-                code: 1141,                
-            }),
-          )
+      if (authors && typeof authors == 'object' && authors.length) {
+        const splitAuthors = authors.map(function(v){
+          return v.split(" ");
+        });
+        const splitAuthorsFlatten = [].concat.apply([], splitAuthors);
+        for (const name of splitAuthorsFlatten) {
+          if (dir.includes(name)) {
+            // push error → dataset should not contain name of authors
+            self.issues.push(
+              new Issue({
+                  reason: "Database name not compliant with Exporl standards",
+                  code: 1141,                
+              }),
+            )
+          }
         }
       }
 
