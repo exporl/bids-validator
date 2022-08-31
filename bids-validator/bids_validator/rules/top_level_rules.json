@@ -18,8 +18,7 @@
         "scans.json",
         "stimulation.json", 
         "channels.json",
-        "channels.tsv", 
-        "coordsystem.json"
+        "channels.tsv" 
       ]
     }
   },

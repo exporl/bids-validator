@@ -1150,7 +1150,7 @@ export default {
   },
   1130: {
     key: 'APR_AND_BDF_NOT_MATCH',
-    severity: 'warning',
+    severity: 'error',
     reason:
     'ExpORL Caveat: The number of apr groups and bdf/bdf.gz files does not correspond. An apr group comprises all apr files that have the same prefix and end with "eeg*.apr".)',
   },
@@ -1189,7 +1189,7 @@ export default {
   },
   1137: {
     key: 'APR_AND_STIMULATION_NOT_MATCH',
-    severity: 'warning',
+    severity: 'error',
     reason:
       'ExpORL Caveat: The number of apr groups and stimulation files does not correspond. An apr group comprises all apr files that have the same prefix and end with "eeg*.apr".)',
   },
@@ -1216,5 +1216,11 @@ export default {
     severity: 'error',
     reason:
       'ExpORL Caveat: Author name in name of database is not allowed',
+  },
+  1142: {
+    key: 'ELECTRODE_COORD_NOT_MATCH',
+    severity: 'error',
+    reason:
+      'ExpORL Caveat: Electrode files and coordinate files are not matched!',
   },
 }

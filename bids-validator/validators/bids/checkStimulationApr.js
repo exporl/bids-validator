@@ -39,7 +39,6 @@ const checkStimulationApr = (fileList) => { // for every apr (or group of aprs) 
                 code: 1137,                
             }),
         )
-        // console.log(issues)
     }
     return issues
 }
@@ -59,34 +58,24 @@ function findWithAttr(array, attr, value) {
 }
 
 const constructMissingAprStimEvidence = (stimulationFiles,aprFiles) => {
-    
+
     const diffs = utils.array.diff(stimulationFiles, aprFiles)
     const aprNotInStimFiles = diffs[0]
     const stimNotInAprFiles = diffs[1]
- 
-    var aprNotInStimulationFiles = []
-    for (let stim of aprNotInStimFiles) {
-        //console.log(stim)
-        aprNotInStimulationFiles.push(stim.replace("eeg","stimulation"))
-    }
-    
-    stimNotInAprFiles.push("")
-    aprNotInStimFiles.push("")
-    aprNotInStimulationFiles.push("")
-   
-  if (aprNotInStimulationFiles[0]!=="" && aprNotInStimFiles[0]!==""){ 
-    const evidence = "For the following stimulation files there is no corresponding apr file (or group of apr files) in the dataset:\n                                  " 
-                          + aprNotInStimulationFiles.join('.tsv \n                                  ') 
-                          + "\n                                  For the following apr files (or group of apr files) there is no corresponding stimulation.tsv in the dataset:\n                                  " 
-                          + stimNotInAprFiles.join('*.apr \n                                  ')
+
+  if (!(stimNotInAprFiles.length === 0) && !(aprNotInStimFiles.length === 0)){ 
+    const evidence = "Missing stimulation files in the dataset:\n                                  " 
+                          + stimNotInAprFiles.map(function(x){return x.replace("eeg", "stimulation.tsv");}).join('\n                                  ') 
+                          + "\n                                  Missing apr files in the dataset:\n                                  " 
+                          + aprNotInStimFiles.map(function(x){return x.replace("eeg", "eeg.apr");}).join('\n                                  ')
       return evidence                    
-    } else if (aprNotInStimulationFiles[0]!==""){ 
-      const evidence = "For the following stimulation files there is no corresponding apr file (or group of apr files) in the dataset:\n                                  " 
-                            + aprNotInStimulationFiles.join('.tsv \n                                  ')
+    } else if (!(stimNotInAprFiles.length === 0)){ 
+      const evidence = "Missing stimulation files in the dataset:\n                                  " 
+                            + stimNotInAprFiles.map(function(x){return x.replace("eeg", "stimulation.tsv");}).join('\n                                  ')
       return evidence
-    } else if (aprNotInStimFiles[0]!==""){
-      const evidence = "For the following apr files (or group of apr files) there is no corresponding stimulation.tsv in the dataset:\n                                  "  
-                              + aprNotInStimFiles.join('*.apr \n                                  ')
+    } else if (!(aprNotInStimFiles.length === 0)){
+      const evidence = "Missing apr files in the dataset:\n                                  "  
+                              + aprNotInStimFiles.map(function(x){return x.replace("eeg", "eeg.apr");}).join('\n                                  ')
       return evidence
   } 
 }

@@ -18,7 +18,7 @@ import utils from '../../utils'
  */
 const start = (dir, options, callback) => {
   // eslint-disable-next-line
-  if (!options.json) console.log(`bids-validator@${version}\n`)
+  if (!options.json) console.log(`bids-validator@${version}ExpORL\n`)
 
   utils.options.parse(dir, options, function(issues, options) {
     if (issues && issues.length > 0) {

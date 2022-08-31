@@ -19,6 +19,7 @@ import validateMisc from '../../utils/files/validateMisc'
 import collectSubjectMetadata from '../../utils/summary/collectSubjectMetadata'
 import checkBdfApr from './checkBdfApr'
 import checkStimulationApr from './checkStimulationApr'
+import checkCoordinateElectrode from './checkCoordinateFiles'
 
 /**
  * Full Test
@@ -243,6 +244,10 @@ const fullTest = (fileList, options, annexed, dir, callback) => {
       self.issues = self.issues.concat(
         checkAnyDataPresent(fileList, summary.subjects),
       )
+
+      // Check electrodes and coordinates files in dataset
+      const coordIssues = checkCoordinateElectrode(fileList)                    // ADDED (Marlies, 2021-10-13)
+      self.issues = self.issues.concat(coordIssues)
       
       // Check for equal number of apr and bdf/bdf.gz files in dataset          // ADDED (Debora, 2020-09-18)
       const aprIssues = checkBdfApr(fileList)
