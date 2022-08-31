@@ -23,6 +23,10 @@ const checkStimuli = function(stimuli) {
   const issues = []
   const stimuliFromEvents = stimuli.events
   const stimuliFromDirectory = stimuli.directory
+
+  var unusedStimuli_all = []
+  var unusedApx_all = []
+
   if (stimuliFromDirectory) {
     const unusedStimuli = stimuliFromDirectory.filter(function(stimuli) {
       return stimuliFromEvents.indexOf(stimuli.relativePath) < 0
@@ -30,24 +34,37 @@ const checkStimuli = function(stimuli) {
     for (let key of unusedStimuli) {
       const stimulus = unusedStimuli[key]
       if ( !(key.relativePath.endsWith("apx")) && !(key.name.startsWith("t_") || key.name.startsWith("trig_") || key.name.startsWith("trigger_")) ) {  // ADDED (Debora, 2020-09-17) (Marlies 2021-06-16)
-        issues.push(
-          new Issue({
-            code: 77,
-            file: stimulus,
-          }),
-        )
+        unusedStimuli_all.push(key.name)
       } else { 
-        if (key.relativePath.endsWith("apx")) {                                 // ADDED (Debora, 2020-09-20)
-            issues.push(                            // ADDED 
-                new Issue({                         // ADDED 
-                code: 1134,                          // ADDED 
-                file: stimulus,                     // ADDED
-              }), 
-            )
-          }                                       // ADDED
-      }                                         // ADDED   
+        if (key.relativePath.endsWith("apx")) {
+          unusedApx_all.push(key.name)                                 
+          }  
+      }  
     }
   }
+
+  // if there are unused Stimuli => make warning 
+  if (!(unusedStimuli_all.length === 0)) {
+    issues.push(
+      new Issue({
+        code: 77,
+        evidence: "There are unused stimuli in the stimuli directory, please check whether they are necessary. Unused files: \n                                  "
+          + unusedStimuli_all.join('\n                                  '),
+        file: "undefined",
+      }))
+  }
+
+  // if there are unused apx's => make warning
+  if (!(unusedApx_all.length === 0)) {
+    issues.push(
+      new Issue({
+        code: 1134,
+        evidence: "There are unused apx's in the stimuli directory, please check whether they are necessary. Unused files: \n                                  "
+          + unusedApx_all.join('\n                                  '),
+        file: "undefined",
+      }))
+  }
+
   return issues
 }
 
@@ -57,6 +74,8 @@ const checkTriggerStimuli = function(trigger_stimuli) {
   const triggersFromEvents = trigger_stimuli.events
   const triggersFromDirectory = trigger_stimuli.directory
 
+  var unusedTriggers = []
+
   if (triggersFromDirectory) {
     const unusedStimuli = triggersFromDirectory.filter(function(trigger_stimuli) {
       return triggersFromEvents.indexOf(trigger_stimuli.relativePath) < 0
@@ -64,15 +83,22 @@ const checkTriggerStimuli = function(trigger_stimuli) {
     for (let key of unusedStimuli) {
       const stimulus = unusedStimuli[key]
       if ( !(key.relativePath.endsWith("apx")) && (key.name.startsWith("t_") || key.name.startsWith("trig_") || key.name.startsWith("trigger_"))) { 
-        issues.push(
-          new Issue({
-            code: 1139,
-            file: stimulus,
-          }),
-        )
+        unusedTriggers.push(key.name)
       }
     }
   }
+
+  // if there are unused triggers => make warning
+  if (!(unusedTriggers.length === 0)) {
+    issues.push(
+      new Issue({
+        code: 1139,
+        evidence: "There are unused trigger stimuli in the stimuli directory, please check whether they are necessary. Unused files: \n                                  "
+          + unusedTriggers.join('\n                                  '),
+        file: "undefined",
+      }))
+  }
+
   return issues
 }
 // <<<<<<<<<
