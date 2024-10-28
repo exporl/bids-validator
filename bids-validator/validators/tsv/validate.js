@@ -16,9 +16,9 @@ const validate = (
   let issues = []
   let participantsTsvContent = ''
   // validate tsv
-  const tsvPromises = files.map(function(file) {
+  const tsvPromises = files.map(function (file) {
     return utils.limit(() =>
-      utils.files.readFile(file, annexed, dir).then(contents => {
+      utils.files.readFile(file, annexed, dir).then((contents) => {
         // Push TSV to list for custom column verification after all data dictionaries have been read
         tsvs.push({
           file: file,
@@ -31,6 +31,7 @@ const validate = (
             contents: contents,
           })
         }
+
         tsv(file, contents, fileList, function(
           tsvIssues,
           participantList,
@@ -42,16 +43,18 @@ const validate = (
               participants = {
                 list: participantList,
                 file: file,
+                }
+                // save content for metadata extraction
+                participantsTsvContent = contents
+              } else if (file.relativePath.includes('phenotype/')) {
+                phenotypeParticipants.push({
+                  list: participantList,
+                  file: file,
+                })
+
               }
-              // save content for metadata extraction
-              participantsTsvContent = contents
-            } else if (file.relativePath.includes('phenotype/')) {
-              phenotypeParticipants.push({
-                list: participantList,
-                file: file,
-              })
             }
-          }
+
           if (stimFiles && stimFiles.length) {
             // add unique new events to the stimuli.events array
             stimuli.events = [...new Set([...stimuli.events, ...stimFiles])]
@@ -62,6 +65,7 @@ const validate = (
           }
           issues = issues.concat(tsvIssues)
         })
+
       }),
     )
   })

@@ -39,8 +39,14 @@
       "type": "string"
     },
     "VolumeTiming": {
-      "type": "number",
-      "exclusiveMinimum": 0
+      "type": "array",
+      "items": {
+        "type": "number",
+        "minimum": 0
+      }
+    },
+    "PartialFourier": {
+      "type": "number"
     }
   }
 }

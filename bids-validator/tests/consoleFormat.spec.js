@@ -14,7 +14,7 @@ describe('console format', () => {
           files: [
             new Issue({
               key: 'TEST_ERROR',
-              file: '/nonexistant/test/file.wut',
+              file: '/nonexistent/test/file.wut',
               code: 0,
               evidence: 'none',
               line: -1,
@@ -34,7 +34,7 @@ describe('console format', () => {
           files: [
             new Issue({
               key: 'TEST_WARNING',
-              file: '/nonexistant/test/file.wut',
+              file: '/nonexistent/test/file.wut',
               code: 2,
               evidence: 'none',
               line: -1,
@@ -65,10 +65,9 @@ describe('console format', () => {
       assert(Array.isArray(output))
       assert.deepEqual(output, [
         '\t\u001b[31m1: [ERR] testing consoleFormat (code: undefined - TEST_ERROR)\u001b[39m',
-        '\t\t.undefined',
-        '\t\t\ttesting consoleFormat',
-        '\t\t\t@ line: -1 character: -1',
-        '\t\t\tEvidence: none',
+        '\t\ttesting consoleFormat',
+        '\t\t@ line: -1 character: -1',
+        '\t\tEvidence: none',
         '',
       ])
     })
@@ -78,10 +77,9 @@ describe('console format', () => {
       })
       assert.deepEqual(output, [
         '\t\u001b[33m1: [WARN] testing consoleFormat (code: undefined - TEST_WARNING)\u001b[39m',
-        '\t\t.undefined',
-        '\t\t\ttesting consoleFormat',
-        '\t\t\t@ line: -1 character: -1',
-        '\t\t\tEvidence: none',
+        '\t\ttesting consoleFormat',
+        '\t\t@ line: -1 character: -1',
+        '\t\tEvidence: none',
         '',
       ])
     })

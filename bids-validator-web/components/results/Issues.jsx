@@ -30,7 +30,7 @@ class Issues extends React.Component {
 
       // issue sub-errors
       let hasErrorFiles = false
-      let subErrors = files.map(function(error, index2) {
+      let subErrors = files.map(function (error, index2) {
         if (error && error.file) {
           hasErrorFiles = true
           return (
@@ -47,7 +47,7 @@ class Issues extends React.Component {
       // issue card
       if (hasErrorFiles) {
         return (
-          <Card key={index} className="validation-error fadeIn" key={index}>
+          <Card className="validation-error fadeIn" key={index}>
             <Card.Header
               className="error-header"
               aria-expanded={this.state.errorOpen}
@@ -108,7 +108,9 @@ class Issues extends React.Component {
     if (issue && issue.helpUrl) {
       return (
         <p>
-          <a target='_blank' href={issue.helpUrl}>Click here for more information about this issue</a>
+          <a target="_blank" href={issue.helpUrl}>
+            Click here for more information about this issue
+          </a>
         </p>
       )
     } else {

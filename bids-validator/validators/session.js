@@ -11,15 +11,12 @@ import isNode from '../utils/isNode'
  * files from the set.
  */
 const session = function missingSessionFiles(fileList) {
-  const issues = []
   const { subjects, sessions } = getDataOrganization(fileList)
-
-  issues.push(...missingSessionWarnings(subjects, sessions))
-
   const subject_files = getSubjectFiles(subjects)
-  issues.push(...missingFileWarnings(subjects, subject_files))
-
-  return issues
+  return [
+    ...missingSessionWarnings(subjects, sessions),
+    ...missingFileWarnings(subjects, subject_files),
+  ]
 }
 
 /**
@@ -104,7 +101,7 @@ function missingSessionWarnings(subjects, sessions) {
 
       // push warning to issues if missing session
       if (sessions.length > 0) {
-        sessions.forEach(commonSession => {
+        sessions.forEach((commonSession) => {
           if (!subject.sessions.includes(commonSession)) {
             subject.missingSessions.push(commonSession)
             const path = `/${subjKey}/${commonSession}`
@@ -143,7 +140,7 @@ function getSubjectFiles(subjects) {
       const subject = subjects[subjKey]
 
       // add files to subject_files if not already listed
-      subject.files.forEach(file => {
+      subject.files.forEach((file) => {
         if (subject_files.indexOf(file) < 0) {
           subject_files.push(file)
         }
@@ -163,8 +160,8 @@ function getSubjectFiles(subjects) {
 function missingFileWarnings(subjects, subject_files) {
   const issues = []
   var subjectKeys = Object.keys(subjects).sort()
-  subjectKeys.forEach(subjKey => {
-    subject_files.forEach(filename => {
+  subjectKeys.forEach((subjKey) => {
+    subject_files.forEach((filename) => {
       const fileInMissingSession = checkFileInMissingSession(
         filename,
         subjects[subjKey],

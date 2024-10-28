@@ -579,52 +579,36 @@ export default {
       'The Authors field of dataset_description.json should contain an array of fields - with one author per field. This was triggered based on the presence of multiple commas in a single author field. Please ensure your authors are properly formatted.',
   },
   104: {
-    key: 'HED_GENERIC_ERROR',
+    key: 'HED_ERROR',
     severity: 'error',
     reason: 'The validation on this HED string returned an error.',
   },
   105: {
-    key: 'HED_GENERIC_WARNING',
+    key: 'HED_WARNING',
     severity: 'warning',
     reason: 'The validation on this HED string returned a warning.',
   },
   106: {
-    key: 'HED_ILLEGAL_CHARACTER',
+    key: 'HED_INTERNAL_ERROR',
     severity: 'error',
-    reason: 'This HED string contains an illegal character.',
+    reason: 'An internal error occurred during HED validation.',
   },
   107: {
-    key: 'HED_PARENTHESES_MISMATCH',
-    severity: 'error',
-    reason: 'This HED string contains mismatched parentheses.',
+    key: 'HED_INTERNAL_WARNING',
+    severity: 'warning',
+    reason: 'An internal warning occurred during HED validation.',
   },
   108: {
-    key: 'HED_MISSING_COMMA_AFTER_TAG',
-    severity: 'error',
-    reason: 'This HED string is missing a required comma after a HED tag.',
-  },
-  109: {
-    key: 'HED_CAPITALIZATION',
-    severity: 'warning',
-    reason:
-      'This HED string is not properly capitalized. HED tags should start with a capital letter or be in CamelCase.',
-  },
-  110: {
-    key: 'HED_DUPLICATE_TAG_IN_SAME_GROUP_OR_TOP_LEVEL',
-    severity: 'error',
-    reason:
-      'This HED string contains duplicate HED tags in the same group or at the top level.',
-  },
-  111: {
-    key: 'HED_TOO_MANY_TILDES',
-    severity: 'error',
-    reason: 'This HED string has more than 2 tildes in the same tag group.',
-  },
-  112: {
     key: 'HED_MISSING_VALUE_IN_SIDECAR',
     severity: 'warning',
     reason:
       'The json sidecar does not contain this column value as a possible key to a HED string.',
+  },
+  109: {
+    key: 'HED_VERSION_NOT_DEFINED',
+    severity: 'warning',
+    reason:
+      "You should define 'HEDVersion' for this file. If you don't provide this information, the HED validation will use the latest version available.",
   },
   113: {
     key: 'NO_AUTHORS',
@@ -639,52 +623,10 @@ export default {
       'This dataset contains remote files. If you would like to validate with remote files, use the --remoteFiles option.',
   },
   115: {
-    key: 'HED_EXTRA_DELIMITER',
-    severity: 'error',
-    reason:
-      'This HED string contains an extra delimiter. There should be no consecutive delimiters or any delimiters at the start or end of the string.',
-  },
-  116: {
-    key: 'HED_INVALID_TAG',
-    severity: 'error',
-    reason:
-      "This HED string contains a tag that doesn't exist in the HED schema and isn't a legal extension of a valid tag.",
-  },
-  117: {
-    key: 'HED_MULTIPLE_UNIQUE_TAGS',
-    severity: 'error',
-    reason:
-      'This HED string contains multiple tags with a prefix defined as unique by the HED schema.',
-  },
-  118: {
-    key: 'HED_CHILD_REQUIRED',
-    severity: 'error',
-    reason:
-      "This HED string contains a tag which doesn't have a child, but is required to have one by the HED schema.",
-  },
-  119: {
-    key: 'HED_REQUIRED_PREFIX_MISSING',
+    key: 'EMPTY_DATASET_NAME',
     severity: 'warning',
     reason:
-      'This HED string is missing a tag with a prefix required by the HED schema.',
-  },
-  120: {
-    key: 'HED_UNIT_CLASS_DEFAULT_USED',
-    severity: 'warning',
-    reason:
-      "This HED string contains a tag with a missing unit. The default unit for that tag's unit class was used.",
-  },
-  121: {
-    key: 'HED_UNIT_CLASS_INVALID_UNIT',
-    severity: 'error',
-    reason:
-      'This HED string contains a tag with a unit that is not valid for its unit class.',
-  },
-  122: {
-    key: 'HED_EXTRA_COMMA_OR_INVALID',
-    severity: 'error',
-    reason:
-      'This HED string contains either a tag with an extra comma or an invalid tag.',
+      'The Name field of dataset_description.json is present but empty of visible characters.',
   },
   123: {
     key: 'INVALID JSON ENCODING',
@@ -737,12 +679,6 @@ export default {
     reason:
       'Type column in channels.tsv files should only consist of values allowed in the specification for MEG/EEG/iEEG data.',
   },
-  132: {
-    key: 'HED_VERSION_NOT_DEFINED',
-    severity: 'warning',
-    reason:
-      "You should define 'HEDVersion' for this file. If you don't provide this information, the HED validation will use the latest version available.",
-  },
   133: {
     key: 'LABELING_TYPE_MUST_DEFINE',
     severity: 'error',
@@ -759,7 +695,7 @@ export default {
     key: 'POST_LABELING_DELAY_MUST_DEFINE',
     severity: 'error',
     reason:
-      "You should define 'PostLabelingDelay' for this file. 'PostLabelingDelay' is the time, in seconds, after the the end of the labeling (for (P)CASL) or middle of the labeling pulse (for PASL) until the middle of the excitation pulse applied to the imaging slab (for 3D acquisition) or first slice (for 2D acquisition). Can be a number (for a single-PLD time series) or an array of numbers (for multi-PLD and Look-Locker). In the latter case, the array of numbers contains the PLD of each volume (i.e. each 'control' and 'label') in the acquisition order. Any image within the time-series without a PLD (e.g. an 'm0scan') is indicated by a zero. Based on DICOM Tags 0018,9079 Inversion Times and 0018,0082 InversionTime.",
+      "You should define 'PostLabelingDelay' for this file. 'PostLabelingDelay' is the time, in seconds, after the end of the labeling (for (P)CASL) or middle of the labeling pulse (for PASL) until the middle of the excitation pulse applied to the imaging slab (for 3D acquisition) or first slice (for 2D acquisition). Can be a number (for a single-PLD time series) or an array of numbers (for multi-PLD and Look-Locker). In the latter case, the array of numbers contains the PLD of each volume (i.e. each 'control' and 'label') in the acquisition order. Any image within the time-series without a PLD (e.g. an 'm0scan') is indicated by a zero. Based on DICOM Tags 0018,9079 Inversion Times and 0018,0082 InversionTime.",
   },
   136: {
     key: 'BACKGROUND_SUPPRESSION_MUST_DEFINE',
@@ -780,17 +716,18 @@ export default {
       "It is recommended to define 'PulseSequenceDetails' for this file. 'PulseSequenceDetails' is the information beyond pulse sequence type that identifies the specific pulse sequence used (for example, 'Standard Siemens Sequence distributed with the VB17 software', 'Siemens WIP ### version #.##', or 'Sequence written by X using a version compiled on MM/DD/YYYY').",
   },
   139: {
-    key: '139_EMPTY',
-    severity: 'warning',
-    reason: '',
+    key: 'BLACKLISTED_MODALITY',
+    severity: 'error',
+    reason:
+      'Found a modality that has been blacklisted through validator configuration.',
   },
   140: {
     key: '140_EMPTY',
     severity: 'warning',
     reason: '',
   },
-  139: {
-    key: '140_EMPTY',
+  141: {
+    key: '141_EMPTY',
     severity: 'warning',
     reason: '',
   },
@@ -924,13 +861,13 @@ export default {
     key: 'POST_LABELING_DELAY_NOT_MATCHING_NIFTI',
     severity: 'error',
     reason:
-      "The number of values for 'PostLabelingDelay' for this file does not match the 4th dimension of the NIfTI header. 'PostLabelingDelay' is the time, in seconds, after the the end of the labeling (for (P)CASL) or middle of the labeling pulse (for PASL) until the middle of the excitation pulse applied to the imaging slab (for 3D acquisition) or first slice (for 2D acquisition). Can be a number (for a single-PLD time series) or an array of numbers (for multi-PLD and Look-Locker). In the latter case, the array of numbers contains the PLD of each volume (i.e. each 'control' and 'label') in the acquisition order. Any image within the time-series without a PLD (e.g. an 'm0scan') is indicated by a zero. Based on DICOM Tags 0018,9079 Inversion Times and 0018,0082 InversionTime.",
+      "The number of values for 'PostLabelingDelay' for this file does not match the 4th dimension of the NIfTI header. 'PostLabelingDelay' is the time, in seconds, after the end of the labeling (for (P)CASL) or middle of the labeling pulse (for PASL) until the middle of the excitation pulse applied to the imaging slab (for 3D acquisition) or first slice (for 2D acquisition). Can be a number (for a single-PLD time series) or an array of numbers (for multi-PLD and Look-Locker). In the latter case, the array of numbers contains the PLD of each volume (i.e. each 'control' and 'label') in the acquisition order. Any image within the time-series without a PLD (e.g. an 'm0scan') is indicated by a zero. Based on DICOM Tags 0018,9079 Inversion Times and 0018,0082 InversionTime.",
   },
   174: {
     key: 'POST_LABELING_DELAY_NOT_MATCHING_ASLCONTEXT_TSV',
     severity: 'error',
     reason:
-      "'The number of values for PostLabelingDelay' for this file does not match the number of volumes in the 'sub-<label>[_ses-<label>][_acq-<label>][_rec-<label>][_run-<index>]_aslcontext.tsv'.'PostLabelingDelay' is the time, in seconds, after the the end of the labeling (for (P)CASL) or middle of the labeling pulse (for PASL) until the middle of the excitation pulse applied to the imaging slab (for 3D acquisition) or first slice (for 2D acquisition). Can be a number (for a single-PLD time series) or an array of numbers (for multi-PLD and Look-Locker). In the latter case, the array of numbers contains the PLD of each volume (i.e. each 'control' and 'label') in the acquisition order. Any image within the time-series without a PLD (e.g. an 'm0scan') is indicated by a zero. Based on DICOM Tags 0018,9079 Inversion Times and 0018,0082 InversionTime.",
+      "'The number of values for PostLabelingDelay' for this file does not match the number of volumes in the 'sub-<label>[_ses-<label>][_acq-<label>][_rec-<label>][_run-<index>]_aslcontext.tsv'.'PostLabelingDelay' is the time, in seconds, after the end of the labeling (for (P)CASL) or middle of the labeling pulse (for PASL) until the middle of the excitation pulse applied to the imaging slab (for 3D acquisition) or first slice (for 2D acquisition). Can be a number (for a single-PLD time series) or an array of numbers (for multi-PLD and Look-Locker). In the latter case, the array of numbers contains the PLD of each volume (i.e. each 'control' and 'label') in the acquisition order. Any image within the time-series without a PLD (e.g. an 'm0scan') is indicated by a zero. Based on DICOM Tags 0018,9079 Inversion Times and 0018,0082 InversionTime.",
   },
   175: {
     key: 'LABELLING_DURATION_NOT_MATCHING_ASLCONTEXT_TSV',
@@ -978,7 +915,7 @@ export default {
     key: 'MAGNETIC_FIELD_STRENGTH_MISSING',
     severity: 'error',
     reason:
-      "You should define 'MagneticFieldStrength' for ths file. 'MagneticFieldStrength' is the nominal field strength of MR magnet in Tesla. Corresponds to DICOM Tag 0018,0087 'Magnetic Field Strength'.",
+      "You should define 'MagneticFieldStrength' for this file. 'MagneticFieldStrength' is the nominal field strength of MR magnet in Tesla. Corresponds to DICOM Tag 0018,0087 'Magnetic Field Strength'.",
   },
   183: {
     key: 'SLICE_TIMING_NOT_DEFINED_2D_ASL',
@@ -990,7 +927,7 @@ export default {
     key: 'POST_LABELING_DELAY_GREATER',
     severity: 'warning',
     reason:
-      "'PostLabelingDelay' is greater than 10, are you sure it's expressed in seconds? 'PostLabelingDelay' is the time, in seconds, after the the end of the labeling (for (P)CASL) or middle of the labeling pulse (for PASL) until the middle of the excitation pulse applied to the imaging slab (for 3D acquisition) or first slice (for 2D acquisition). Can be a number (for a single-PLD time series) or an array of numbers (for multi-PLD and Look-Locker). In the latter case, the array of numbers contains the PLD of each volume (i.e. each 'control' and 'label') in the acquisition order. Any image within the time-series without a PLD (e.g. an 'm0scan') is indicated by a zero. Based on DICOM Tags 0018,9079 Inversion Times and 0018,0082 InversionTime.",
+      "'PostLabelingDelay' is greater than 10, are you sure it's expressed in seconds? 'PostLabelingDelay' is the time, in seconds, after the end of the labeling (for (P)CASL) or middle of the labeling pulse (for PASL) until the middle of the excitation pulse applied to the imaging slab (for 3D acquisition) or first slice (for 2D acquisition). Can be a number (for a single-PLD time series) or an array of numbers (for multi-PLD and Look-Locker). In the latter case, the array of numbers contains the PLD of each volume (i.e. each 'control' and 'label') in the acquisition order. Any image within the time-series without a PLD (e.g. an 'm0scan') is indicated by a zero. Based on DICOM Tags 0018,9079 Inversion Times and 0018,0082 InversionTime.",
   },
   186: {
     key: 'BOLUS_CUT_OFF_DELAY_TIME_GREATER',
@@ -1020,8 +957,7 @@ export default {
     key: 'PASL_NOT_ALLOWED_FIELDS',
     severity: 'error',
     reason:
-      "You defined one of the not allowed fields in case of PASL 'ArterialSpinLabelingType'." +
-      "Please verify which field among 'CASLType', 'PCASLType' 'LabelingPulseAverageGradient', 'LabelingPulseMaximumGradient', 'LabelingPulseAverageB1', 'LabelingPulseDuration', 'LabelingPulseFlipAngle', 'LabelingPulseInterval', 'LabelingDuration' you have filled.",
+      "You defined one of the not allowed fields in case of PASL 'ArterialSpinLabelingType'. Please verify which field among 'CASLType', 'PCASLType' 'LabelingPulseAverageGradient', 'LabelingPulseMaximumGradient', 'LabelingPulseAverageB1', 'LabelingPulseDuration', 'LabelingPulseFlipAngle', 'LabelingPulseInterval', 'LabelingDuration' you have filled.",
   },
   191: {
     key: 'PCASL_CASL_LABELING_TYPE_NOT_ALLOWED',
@@ -1094,47 +1030,6 @@ export default {
     severity: 'error',
     reason:
       "M0Type was not defined correctly. If 'M0Type' is equal to separate, the dataset should include a *_m0scan.nii[.gz] and *_m0scan.json file.",
-  },
-  203: {
-    key: 'HED_WRONG_NUMBER_OF_NUMBER_SIGNS',
-    severity: 'error',
-    reason:
-      'You must have exactly one number sign in a HED value-taking string template.',
-  },
-  204: {
-    key: 'HED_INVALID_PARENT_NODE',
-    severity: 'error',
-    reason: 'You cannot use a valid HED node as a value or extension.',
-  },
-  205: {
-    key: 'HED_NO_VALID_TAG_FOUND',
-    severity: 'error',
-    reason: 'No valid base node was found for this HED tag.',
-  },
-  206: {
-    key: 'HED_EMPTY_TAG_FOUND',
-    severity: 'error',
-    reason: 'An empty HED tag cannot be validated.',
-  },
-  207: {
-    key: 'HED_DUPLICATE_TAGS_IN_SCHEMA',
-    severity: 'error',
-    reason: 'The source HED schema is invalid as it contains duplicate tags.',
-  },
-  208: {
-    key: 'HED_TAG_EXTENSION',
-    severity: 'warning',
-    reason: 'A HED tag extension was found.',
-  },
-  209: {
-    key: 'HED_INVALID_SIDECAR_ERROR',
-    severity: 'error',
-    reason: 'A HED error was found in the JSON sidecar.',
-  },
-  210: {
-    key: 'HED_INVALID_SIDECAR_WARNING',
-    severity: 'warning',
-    reason: 'A HED warning was found in the JSON sidecar.',
   },
   211: {
     key: 'TSV_MISSING_REQUIRED_COLUMN',
@@ -1222,5 +1117,146 @@ export default {
     severity: 'error',
     reason:
       'ExpORL Caveat: Electrode files and coordinate files are not matched!',
+  },
+  213: {
+    key: 'README_FILE_SMALL',
+    severity: 'warning',
+    reason:
+      'The recommended file /README is very small. Please consider expanding it with additional information about the dataset.',
+  },
+  214: {
+    key: 'SAMPLES_TSV_MISSING',
+    severity: 'error',
+    reason:
+      'The compulsory file /samples.tsv is missing. See Section 03 (Modality agnostic files) of the BIDS specification.',
+  },
+  215: {
+    key: 'SAMPLE_ID_PATTERN',
+    severity: 'error',
+    reason:
+      'sample_id column labels must consist of the pattern "sample-<sample_id>".',
+  },
+  216: {
+    key: 'SAMPLE_ID_COLUMN',
+    severity: 'error',
+    reason: "Samples .tsv files must have a 'sample_id' column.",
+  },
+  217: {
+    key: 'PARTICIPANT_ID_COLUMN',
+    severity: 'error',
+    reason: "Samples .tsv files must have a 'participant_id' column.",
+  },
+  218: {
+    key: 'SAMPLE_TYPE_COLUMN',
+    severity: 'error',
+    reason: "Samples .tsv files must have a 'sample_type' column.",
+  },
+  219: {
+    key: 'SAMPLE_TYPE_VALUE',
+    severity: 'error',
+    reason:
+      'sample_type MUST consist of one of the following values: cell line, in vitro differentiated cells, primary cell, cell-free sample, cloning host, tissue, whole organisms, organoid or technical sample.',
+  },
+  220: {
+    key: 'SAMPLE_ID_DUPLICATE',
+    severity: 'error',
+    reason:
+      'Each sample from a same subject MUST be described by one and only one row.',
+  },
+  221: {
+    key: 'PIXEL_SIZE_INCONSISTENT',
+    severity: 'error',
+    reason:
+      'PixelSize need to be consistent with PhysicalSizeX, PhysicalSizeY and PhysicalSizeZ OME metadata fields',
+  },
+  222: {
+    key: 'INVALID_PIXEL_SIZE_UNIT',
+    severity: 'warning',
+    reason: 'PixelSize consistency is only validated for "mm", "µm" and "nm".',
+  },
+  223: {
+    key: 'CHUNK_TRANSFORMATION_MATRIX_MISSING',
+    severity: 'warning',
+    reason:
+      "It is recommended to define 'ChunkTransformationMatrix' for this file.",
+  },
+  224: {
+    key: 'OPTIONAL_FIELD_INCONSISTENT',
+    severity: 'error',
+    reason: 'Optional JSON field is not consistent with the OME-TIFF metadata',
+  },
+  225: {
+    key: 'NO_VALID_JSON',
+    severity: 'error',
+    reason: 'No valid JSON file found for this file',
+  },
+  226: {
+    key: 'UNSUPPORTED_BIG_TIFF',
+    severity: 'warning',
+    reason: 'Metadata consistency check skipped for BigTiff OME-TIFF file',
+  },
+  227: {
+    key: 'INCONSISTENT_TIFF_EXTENSION',
+    severity: 'error',
+    reason: 'Inconsistent TIFF file type and extension',
+  },
+  228: {
+    key: 'MULTIPLE_README_FILES',
+    severity: 'error',
+    reason:
+      'A BIDS dataset MUST NOT contain more than one `README` file (with or without extension) at its root directory.',
+  },
+  229: {
+    key: 'INCORRECT_ORDER_TSV_COLUMN_CHANNELS_IEEG',
+    severity: 'error',
+    reason:
+      "The column names of the IEEG channels file must be in the following order ['name', 'type', 'units', 'low_cutoff', 'high_cutoff']",
+  },
+  230: {
+    key: 'INCORRECT_ORDER_TSV_COLUMN_CHANNELS_EEG',
+    severity: 'error',
+    reason:
+      "The column names of the EEG channels file must be in the following order ['name', 'type', 'units']",
+  },
+  231: {
+    key: 'TSV_COLUMN_HEADER_DUPLICATE',
+    severity: 'error',
+    reason:
+      'Two elements in the first row of a TSV are the same. Each column header must be unique.',
+  },
+  232: {
+    key: 'TSV_COLUMN_HEADER_NA',
+    severity: 'error',
+    reason:
+      'An element in a tsv header is "n/a". A different header name should be chosen.',
+  },
+  233: {
+    key: 'MISSING_TSV_COLUMN_NIRS_OPTODES',
+    severity: 'error',
+    reason:
+      "The column names of the optodes file must begin with ['name', 'type', 'x', 'y', 'z']",
+  },
+  234: {
+    key: 'MISSING_TSV_COLUMN_NIRS_CHANNELS',
+    severity: 'error',
+    reason:
+      "The column names of the channels file must begin with ['name', 'type', 'source', 'detector', 'wavelength_nominal', 'units']",
+  },
+  235: {
+    key: 'MOTION_COMPONENT_IN_WRONG_COLUMN',
+    severity: 'error',
+    reason:
+      "The 'component' column must be the second column in the channels.tsv file.",
+  },
+  236: {
+    key: 'MOTION_COMPONENT_INVLAID_VALUE',
+    severity: 'error',
+    reason:
+      "Values in the 'component' column must be one of ['x', 'y', 'z', 'quat_x', 'quat_y', 'quat_z', 'quat_w', 'n/a'].",
+  },
+  237: {
+    key: 'PET_JSON_KEY_REQUIRED',
+    severity: 'error',
+    reason: 'A PET image JSON sidecar is missing a required field.',
   },
 }

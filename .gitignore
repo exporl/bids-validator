@@ -4,14 +4,15 @@ node_modules/
 npm-debug.log
 .idea/
 .ipynb_checkpoints
-# package-lock.json
+!/package-lock.json
+package-lock.json
 .nyc_output/
 coverage/
 __pycache__/
 dist/
 *.egg-info/
 bids-validator-web/out/
-bids-validator-web/.next/
+.next/
 
 # Only use global yarn.lock
 bids-validator/yarn.lock
