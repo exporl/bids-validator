@@ -22,12 +22,12 @@ https://exporl.med.kuleuven.be/jenkins/view/All/job/bids/
 
 ## Deploying the online bids-validator
 An online version of the bids-validator is available at https://exporl.gbiomed.kuleuven.be/bids-validator. This version includes the ExpORL specific rules. This web application can be deployed with the following steps:
-- prerequisite: you need access to the webserver where the online version is hosted. In this case make sure you have access to gbw-s-exporl03.luna.kuleuven.be.
+- prerequisite: you need access to the webserver where the online version is hosted. In this case make sure you have access to gbw-s-exporl03.luna.kuleuven.be. (This can be asked to Renzo - the IT/Apex guy-, he can give you access to the deployment user to fix this change)
 - get a clone of the git repository at https://github.com/exporl/bids-validator
 - ensure a recent nodejs (v16+) installation is available. At the time of writing a recent version of npm (v7+) is required (because workspaces are used), which ships with nodejs v16+. See https://nodejs.org for installation instructions suitable for your environment. You can check your node version with 'node -v'. Consider using [https://github.com/nvm-sh/nvm nvm] to install and manage your nodejs environment.
 - in the repository directory run <pre>npm install</pre>
 - in the repository directory run <pre>npm run web-export</pre>
-- copy the contents from the generated directory at 'bids-validator-web/out' to the webserver (gbw-s-exporl03.luna.kuleuven.be). On linux you can for example do <pre>rsync -rzvh --delete ./bids-validator-web/out/. gbw-s-exporl03.luna.kuleuven.be:/var/www/html/bids-validator</pre>
+- copy the contents from the generated directory at 'bids-validator-web/out' to the webserver (gbw-s-exporl03.luna.kuleuven.be). On linux you can for example do <pre>rsync -rzvh --delete ./bids-validator-web/out/. gbw-s-exporl03.luna.kuleuven.be:/var/www/html/bids-validator</pre> (Check: your ssh path migth be different!)
 - the online version should now be available at https://exporl.gbiomed.kuleuven.be/bids-validator
 
 ## Integrate new changes and upstream changes from the official bids-validator project
