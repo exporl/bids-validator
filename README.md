@@ -1,5 +1,9 @@
 ExpORL custum changes of the bids-validator. 
 
+# TO DO 
+- check online bids validator -- wrong database name (should be checked where this originates from)
+- node error:  Warning: Closing directory handle on garbage collection -- prevent this warning
+
 # installation: 
 make sure you have node installed (https://nodejs.org/en/download/package-manager; node version >= 18.0.0; npm version >= 7)
 clone the repository (git clone https://github.com/exporl/bids-validator)
