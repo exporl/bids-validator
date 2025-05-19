@@ -20,6 +20,7 @@
         "fieldmap.json",
         "events.json",
         "scans.json",
+        "sessions.json",
         "stimulation.json", 
         "channels.json",
         "channels.tsv",
@@ -34,7 +35,6 @@
         "TB1SRGE\\.json",
         "RB1COR\\.json",
         "events\\.json",
-        "scans\\.json",
         "samples\\.json",
         "samples\\.tsv"
       ]

@@ -97,7 +97,9 @@ const fullTest = (fileList, options, annexed, dir, callback) => {
 
   // check whether it is compliant according to exporl rules
   const expressionDataset = /\d{4}-[a-zA-Z0-9]/
-  if (!(expressionDataset.test(dir))) {
+  dir = dir.replace(/[\/\\]$/, ''); // Remove trailing slash or backslash if present
+  const dbName = dir.split('/').reverse()[0]; // Get the last part of the path (database name)
+  if (!(expressionDataset.test(dbName))) {
     self.issues.push(
       new Issue({
           reason: "Database name not compliant with Exporl standards",
@@ -185,7 +187,7 @@ const fullTest = (fileList, options, annexed, dir, callback) => {
         });
         const splitAuthorsFlatten = [].concat.apply([], splitAuthors);
         for (const name of splitAuthorsFlatten) {
-          if (dir.includes(name)) {
+          if (dbName.includes(name)) {
             // push error → dataset should not contain name of authors
             self.issues.push(
               new Issue({
